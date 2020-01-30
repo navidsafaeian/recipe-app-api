@@ -4,18 +4,19 @@ from django.urls import reverse
 
 class AdminSiteTests(TestCase):
 
-    '''Setup function is run before every test: create a super user, log him in and create a normal user'''
-    def setUp(self): 
+    '''Setup function is run before every test: create a super user, 
+    log him in and create a normal user'''
+    def setUp(self):
         self.client = Client()
         self.admin_user = get_user_model().objects.create_superuser(
-            email = 'admin@gmail.com',
-            password = 'password123'
+            email='admin@gmail.com',
+            password='password123'
         )
         self.client.force_login(self.admin_user)
         self.user = get_user_model().objects.create_user(
-            email = 'test@gmail.com',
-            password = 'password123',
-            name = 'Test User Full Name'
+            email='test@gmail.com',
+            password='password123',
+            name='Test User Full Name'
         )
     
     def test_users_listed(self):
@@ -40,31 +41,13 @@ class AdminSiteTests(TestCase):
 
         self.assertEqual(res.status_code, 200)
 
-      
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
-Note for core_user_changelist: Reversing admin URLs. 
-Each ModelAdmin instance provides an set of named URLs: 
-{{ app_label }}_{{ model_name }}_changelist   
-{{ app_label }}_{{ model_name }}_add   
+'''Note for core_user_changelist: Reversing admin URLs.
+Each ModelAdmin instance provides an set of named URLs:
+{{ app_label }}_{{ model_name }}_changelist 
+{{ app_label }}_{{ model_name }}_add
 {{ app_label }}_{{ model_name }}_history, object_id
 {{ app_label }}_{{ model_name }}_delete, object_id
 The UserAdmin provides a named URL:
-{{ app_label }}_{{ model_name }}
-'''
+{{ app_label }}_{{ model_name }}'''
+
