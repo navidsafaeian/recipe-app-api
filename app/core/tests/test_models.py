@@ -4,10 +4,10 @@ from django.contrib.auth import get_user_model
 class ModelTests(TestCase):
 
     def test_create_user_with_email_successfull(self):
-        """Test creating a new user with an email is successful"""
+        """Test creating a new user with an email is successful.""" 
+
         email = "test@gmail.com"
         password = "Password123"
-
         user = get_user_model().objects.create_user(
                         email=email,
                         password=password
@@ -17,7 +17,9 @@ class ModelTests(TestCase):
 
 
     def test_new_user_email_normalized(self):
-        """Test the email for a new user is normalized"""
+        """Test the email for a new user is normalized."""
+        """We want email field to be unique for users But the second part of the email address is Case sensitive by Default ie, xyz@gmail.com and xyz@GMAIL.COM will be unique values So we change email to lower case"""
+
         email = 'test@GMAIL.COM'
         # here we just random password because already tested
         user = get_user_model().objects.create_user(email, 'test123')
@@ -25,7 +27,7 @@ class ModelTests(TestCase):
     
 
     def test_new_user_invalid_email(self):
-        """Test creating user with no email raises error"""
+        """Test creating user with invalid or no email raises error"""
         with self.assertRaises(ValueError):
             get_user_model().objects.create_user(None, 'test123')
 

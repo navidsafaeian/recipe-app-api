@@ -20,16 +20,24 @@ class AdminSiteTests(TestCase):
         )
     
     def test_users_listed(self):
-        """Test that users are listed on the user page"""
+        """Test that users are listed on the user page.
+        We have to make changes to django admin to accomodate
+        ou custom user model."""
+
+        # These urls are listed in django admin docs (following in details)
         url = reverse('admin:core_user_changelist')
         res = self.client.get(url)
-
+        # AssertContains checks if certain value is present in a dict.
+        # Also checks if the http respose is OK (200)
         self.assertContains(res, self.user.name)
         self.assertContains(res, self.user.email)
 
     def test_user_page_change(self):
         """Test that the user edit page works"""
+
+        # We have to include fieldssets to UserAdmin for this to work
         url = reverse('admin:core_user_change', args=[self.user.id])
+        # /admin/core/user/1
         res = self.client.get(url)
 
         self.assertEqual(res.status_code, 200)
